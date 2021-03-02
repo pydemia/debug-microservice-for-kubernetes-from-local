@@ -20,6 +20,11 @@ sudo dnf install telepresence -y
 
 ### OSX
 
+```zsh
+brew install --cask osxfuse
+brew install datawire/blackbird/telepresence
+```
+
 ---
 
 ## Usage
