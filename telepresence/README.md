@@ -2,44 +2,96 @@
 
 ## Installation
 
-https://www.telepresence.io/reference/install
+https://www.telepresence.io/docs/latest/quick-start
+https://www.getambassador.io/docs/telepresence/latest/quick-start
 
-### Ubuntu(16.04 or later)
-
-```bash
-curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.deb.sh | sudo bash
-sudo apt install --no-install-recommends telepresence -y
-```
-
-### Fedora(26 or later)
+### Linux
 
 ```bash
-curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.rpm.sh | sudo bash
-sudo dnf install telepresence -y
+curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1/telepresence-linux-amd64 -o telepresence
+
+mkdir ${HOME}/.local/bin
+chmod a+x telepresence && mv telepresence ${HOME}/.local/bin/telepresence
 ```
 
 ### OSX
 
 ```zsh
-brew install --cask osxfuse
-brew install datawire/blackbird/telepresence
+# Mac: Intel
+curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1/telepresence-linux-amd64 -o telepresence
+# Mac: Silicon
+curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1/telepresence-linux-arm64 -o telepresence
+
+mkdir ${HOME}/.local/bin
+chmod a+x telepresence && mv telepresence ${HOME}/.local/bin/telepresence
 ```
 
 ---
 
 ## Usage
 
-### Check Authorities for K8S Cluster
+### Install to Cluster
 
 ```bash
-# An example for gcloud:
-# create an `clusterrolebinding` to grant an admin role `cluster-admin` to your gcloud account.
-kubectl create clusterrolebinding my-cluster-admin-binding \
-    --clusterrole=cluster-admin \
-    --user=$(gcloud info --format="value(config.account)")
+$ telepresence helm install
+Traffic Manager installed successfully
 
-kubectl config current-context
+$ curl -ik https://kubernetes.default
+HTTP/1.1 401 Unauthorized
+Cache-Control: no-cache, private
+Content-Type: application/json
+...
 ```
+
+```bash
+$ telepresence list
+...
+example-service: ready to intercept (traffic-agent not yet installed)
+...
+```
+
+* Intercept
+
+```bash
+$ telepresence intercept \
+  <service-name> \
+  --port <local-port>[:<remote-port>] \
+  --env-file <path-to-env-file>
+```
+
+* Outbound proxy
+
+```bash
+$ telepresence connect
+Launching Telepresence Daemon v2.3.7 (api v3)
+Need root privileges to run "/usr/local/bin/telepresence daemon-foreground /home/<user>/.cache/telepresence/logs '' ''"
+[sudo] password:
+Connecting to traffic manager...
+Connected to context default (https://<cluster public IP>)
+```
+
+* Check status
+
+```bash
+$ telepresence status
+Root Daemon: Running
+  Version     : v2.3.7 (api 3)
+  Primary DNS : ""
+  Fallback DNS: ""
+User Daemon: Running
+  Version           : v2.3.7 (api 3)
+  Ambassador Cloud  : Logged out
+  Status            : Connected
+  Kubernetes server : https://<cluster public IP>
+  Kubernetes context: default
+  Telepresence proxy: ON (networking to the cluster is enabled)
+  Intercepts        : 0 total
+
+```
+
+---
+
+# OLD
 
 ### Launch a proxy to the existing deployment named `core`
 
