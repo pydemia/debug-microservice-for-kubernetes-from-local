@@ -2,8 +2,8 @@
 
 ## Installation
 
-https://www.telepresence.io/docs/latest/quick-start
-https://www.getambassador.io/docs/telepresence/latest/quick-start
+* https://www.telepresence.io/docs/latest/quick-start
+* https://www.getambassador.io/docs/telepresence/latest/quick-start
 
 ### Linux
 
