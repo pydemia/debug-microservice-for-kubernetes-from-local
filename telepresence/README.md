@@ -11,6 +11,7 @@ https://www.getambassador.io/docs/telepresence/latest/quick-start
 curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1/telepresence-linux-amd64 -o telepresence
 
 mkdir ${HOME}/.local/bin
+export PATH="${HOME}/.local/bin:${PATH}"
 chmod a+x telepresence && mv telepresence ${HOME}/.local/bin/telepresence
 ```
 
@@ -23,6 +24,7 @@ curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1
 curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.15.1/telepresence-linux-arm64 -o telepresence
 
 mkdir ${HOME}/.local/bin
+export PATH="${HOME}/.local/bin:${PATH}"
 chmod a+x telepresence && mv telepresence ${HOME}/.local/bin/telepresence
 ```
 
